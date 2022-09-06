@@ -22,9 +22,6 @@ namespace PagingExample.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public WeatherForecastResponse Get([FromQuery] WeatherForecastQuery query)
         {
-
-            
-
             var dbResult = Enumerable
                 .Range(1, 500)
                 .Select(index => new WeatherForecastResponseDto
@@ -36,11 +33,10 @@ namespace PagingExample.Controllers
                 })
              .ToArray();
 
-
-            var response = new WeatherForecastResponse() 
-            { 
-                Items = dbResult.Skip((query.Metadata.Page - 1) * query.Metadata.PageSize).Take(query.Metadata.PageSize) ,
-                Metadata = new MetadataGetResponseFields(dbResult.Length,query.Metadata.PageSize,query.Metadata.Page)
+            var response = new WeatherForecastResponse()
+            {
+                Items = dbResult.Skip((query.Metadata.CurrentPage - 1) * query.Metadata.PageSize).Take(query.Metadata.PageSize),
+                Metadata = new MetadataGetResponseFields(dbResult.Length, query.Metadata.PageSize, query.Metadata.CurrentPage)
             };
 
             return response;
