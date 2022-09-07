@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { GetResponse } from './shared/interfaces';
 import { ISrvPagination } from './shared/srv-pagination/srv-pagination.component';
+import { IPaginationConfig } from './shared/srv-pagination/srv-pagination.interfaces';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass'],
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   itemsFiltered: GetWeatherForecastResponseDto[] = [];
@@ -16,13 +17,13 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.getWeather(1);
+    this.getWeather({page:1,pageSize:10});
   }
 
-  private getWeather(page: number) {
+  private getWeather(pagination:IPaginationConfig) {
     const params = new HttpParams()
-      .append('Metadata.PageSize', 10)
-      .append('Metadata.CurrentPage', page);
+      .append('Metadata.PageSize', pagination.pageSize)
+      .append('Metadata.CurrentPage', pagination.page);
 
     this.http
       .get<GetWeatherForecastResponse>(this.weatherURL, { params })
@@ -32,8 +33,8 @@ export class AppComponent implements OnInit {
       });
   }
 
-  pageChanged(page: number) {
-    this.getWeather(page);
+  pageChanged( pagination: IPaginationConfig) {
+    this.getWeather(pagination);
   }
 }
 

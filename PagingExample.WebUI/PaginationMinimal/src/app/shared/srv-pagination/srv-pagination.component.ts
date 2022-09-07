@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IPaginationConfig } from './srv-pagination.interfaces';
 
 @Component({
   selector: 'srv-pagination',
   templateUrl: './srv-pagination.component.html',
-  styleUrls: ['./srv-pagination.component.sass'],
+  styleUrls: ['./srv-pagination.component.scss'],
 })
 export class SrvPaginationComponent implements OnInit {
   @Input() get config(): ISrvPagination {
@@ -14,9 +15,14 @@ export class SrvPaginationComponent implements OnInit {
     this.update();
   }
 
-  @Output() pageChanged: EventEmitter<number> = new EventEmitter();
+  @Input() pageSizes: number[] = [5, 10, 15, 20];
+
+
+  @Output() pageChanged: EventEmitter<IPaginationConfig> = new EventEmitter();
 
   pages: number[] = [];
+  selectedPageSize: number = this.pageSizes[0];
+
   private _config!: ISrvPagination;
 
   constructor() { }
@@ -44,8 +50,19 @@ export class SrvPaginationComponent implements OnInit {
       return;
     }
 
-    this.pageChanged.emit(page);
+    this.pageChanged.emit({ page: page, pageSize: this.config.pageSize });
   }
+
+  changeSize($event: Event) {
+    if (this.config.pageSize === this.selectedPageSize) {
+      return;
+    }
+
+    this.pageChanged.emit({ page: this.config.currentPage, pageSize: this.selectedPageSize });
+  }
+
+
+
 
   //regenerate pages
   update(): void {
@@ -53,6 +70,8 @@ export class SrvPaginationComponent implements OnInit {
     if (!this._config) {
       return;
     }
+
+    this.selectedPageSize = this._config.pageSize;
 
     const slots = 5;
 
@@ -66,19 +85,19 @@ export class SrvPaginationComponent implements OnInit {
       }
     }
     else if (this._config.currentPage == this.config.totalPages) {
-      for (let index = 0; index < slots &&  this._config.currentPage -index >= 1; index++) {
-        this.pages= [this._config.currentPage -index, ...this.pages];
+      for (let index = 0; index < slots && this._config.currentPage - index >= 1; index++) {
+        this.pages = [this._config.currentPage - index, ...this.pages];
       }
     }
     else {
 
-      let freeSlots=slots;
-      for (let index = 0; index < Math.ceil(slots/2) &&  this._config.currentPage -index >= 1; index++) {
-        this.pages= [this._config.currentPage -index, ...this.pages];
+      let freeSlots = slots;
+      for (let index = 0; index < Math.ceil(slots / 2) && this._config.currentPage - index >= 1; index++) {
+        this.pages = [this._config.currentPage - index, ...this.pages];
         freeSlots--;
       }
-      for (let index = 0; index < freeSlots && index+1 + this._config.currentPage  < this._config.totalPages; index++) {
-        this.pages.push(index +1 + this._config.currentPage);
+      for (let index = 0; index < freeSlots && index + 1 + this._config.currentPage < this._config.totalPages; index++) {
+        this.pages.push(index + 1 + this._config.currentPage);
       }
 
 

@@ -1,12 +1,18 @@
-<ng-container *ngIf="config">
-  <nav aria-label="...">
+<ng-container *ngIf="config" >
+  <span>Page size</span>
+  <select class="ms-2 me-3 form-select" (change)="changeSize($event)" [(ngModel)]="selectedPageSize" style="width: 70px;display: inline;" >
+    <option *ngFor="let size of pageSizes" [ngValue]="size">
+      {{ size }}
+    </option>
+  </select>
+  <nav aria-label="..."  style="display: inline-block;">
     <ul class="pagination">
       <li class="page-item" [class.disabled]="!config.hasPrevious" (click)="previousNext(-1, $event)">
         <span class="page-link">Previous </span>
       </li>
       <ng-container *ngFor="let item of pages">
         <li class="page-item">
-          <a class="page-link" href="#" *ngIf="item != config.currentPage"  (click)="changePage(item, $event)" >{{
+          <a class="page-link" href="#" *ngIf="item != config.currentPage" (click)="changePage(item, $event)">{{
             item
             }}</a>
         </li>
@@ -20,4 +26,7 @@
       </li>
     </ul>
   </nav>
+
 </ng-container>
+
+

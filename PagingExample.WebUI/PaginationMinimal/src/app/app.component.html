@@ -23,7 +23,10 @@
         <!-- <td>Sum</td>
         <td>$180</td> -->
       </tr>
+
+
     </tfoot>
   </table>
-<srv-pagination [config]="pagination" (pageChanged)="pageChanged($event)" ></srv-pagination>
+  <srv-pagination [config]="pagination" (pageChanged)="pageChanged($event)" [pageSizes]="[5,10,15,20]" class="srv-pagination"></srv-pagination>
+
 </div>
