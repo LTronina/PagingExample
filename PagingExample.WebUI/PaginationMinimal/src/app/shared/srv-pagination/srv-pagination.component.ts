@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IPaginationConfig } from './srv-pagination.interfaces';
+import { IPaginationQuery, ISrvPaginationResponse } from './srv-pagination.interfaces';
 
 @Component({
   selector: 'srv-pagination',
@@ -7,26 +7,23 @@ import { IPaginationConfig } from './srv-pagination.interfaces';
   styleUrls: ['./srv-pagination.component.scss'],
 })
 export class SrvPaginationComponent implements OnInit {
-  @Input() get config(): ISrvPagination {
+  @Input() get config(): ISrvPaginationResponse {
     return this._config;
   }
-  set config(config: ISrvPagination) {
+  set config(config: ISrvPaginationResponse) {
     this._config = config;
     this.update();
   }
 
   @Input() pageSizes: number[] = [5, 10, 15, 20];
-
-
-  @Output() pageChanged: EventEmitter<IPaginationConfig> = new EventEmitter();
-
-  pages: number[] = [];
+  @Output() pageChanged: EventEmitter<IPaginationQuery> = new EventEmitter();
   selectedPageSize: number = this.pageSizes[0];
+  currentPage: number = 0;
 
-  private _config!: ISrvPagination;
+  private _config!: ISrvPaginationResponse;
 
-  constructor() { }
-  ngOnInit(): void { }
+  constructor() {}
+  ngOnInit(): void {}
 
   previousNext(direction: number, event?: MouseEvent) {
     let page: number = this.config.currentPage;
@@ -42,6 +39,18 @@ export class SrvPaginationComponent implements OnInit {
     this.changePage(page, event);
   }
 
+  changePageFromInput(event: Event) {
+    if (this.currentPage < 1 || this.currentPage > this.config.totalPages) {
+      this.currentPage = this.config.currentPage;
+      return;
+    }
+
+    this.pageChanged.emit({
+      currentPage: this.currentPage,
+      pageSize: this.config.pageSize,
+    });
+  }
+
   changePage(page: number, event?: MouseEvent) {
     if (event) {
       event.preventDefault();
@@ -49,67 +58,57 @@ export class SrvPaginationComponent implements OnInit {
     if (this.config.currentPage === page) {
       return;
     }
-
-    this.pageChanged.emit({ page: page, pageSize: this.config.pageSize });
+    this.pageChanged.emit({ currentPage: page, pageSize: this.config.pageSize });
   }
 
   changeSize($event: Event) {
     if (this.config.pageSize === this.selectedPageSize) {
       return;
     }
-
-    this.pageChanged.emit({ page: this.config.currentPage, pageSize: this.selectedPageSize });
+    this.pageChanged.emit({
+      currentPage: this.config.currentPage,
+      pageSize: this.selectedPageSize,
+    });
   }
 
+  last(event?: MouseEvent): void {
+    if (event) {
+      event.preventDefault();
+    }
+    if (!this.config) {
+      return;
+    }
+    if (this.config.currentPage === this.config.totalPages) {
+      return;
+    }
+    this.pageChanged.emit({
+      currentPage: this.config.totalPages,
+      pageSize: this.selectedPageSize,
+    });
+  }
 
+  first(event?: MouseEvent): void {
+    if (event) {
+      event.preventDefault();
+    }
 
+    if (!this.config) {
+      return;
+    }
+
+    if (this.config.currentPage === 1) {
+      return;
+    }
+
+    this.pageChanged.emit({ currentPage: 1, pageSize: this.selectedPageSize });
+  }
 
   //regenerate pages
   update(): void {
-    this.pages.splice(0, this.pages.length);
-    if (!this._config) {
+    if (!this.config) {
       return;
     }
-
-    this.selectedPageSize = this._config.pageSize;
-
-    const slots = 5;
-
-    if (this._config.currentPage == this.config.totalPages && this._config.currentPage == 1) {
-      return;
-    }
-
-    if (this._config.currentPage == 1) {
-      for (let index = 0; index < slots && index + this._config.currentPage < this._config.totalPages; index++) {
-        this.pages.push(index + this._config.currentPage);
-      }
-    }
-    else if (this._config.currentPage == this.config.totalPages) {
-      for (let index = 0; index < slots && this._config.currentPage - index >= 1; index++) {
-        this.pages = [this._config.currentPage - index, ...this.pages];
-      }
-    }
-    else {
-
-      let freeSlots = slots;
-      for (let index = 0; index < Math.ceil(slots / 2) && this._config.currentPage - index >= 1; index++) {
-        this.pages = [this._config.currentPage - index, ...this.pages];
-        freeSlots--;
-      }
-      for (let index = 0; index < freeSlots && index + 1 + this._config.currentPage < this._config.totalPages; index++) {
-        this.pages.push(index + 1 + this._config.currentPage);
-      }
-
-
-    }
+    this.currentPage = this.config.currentPage;
+    this.selectedPageSize = this.config.pageSize;
   }
-}
-
-export interface ISrvPagination {
-  totalCount: number;
-  pageSize: number;
-  currentPage: number;
-  totalPages: number;
-  hasNext: boolean;
-  hasPrevious: boolean;
 }
