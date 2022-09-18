@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { GetResponse } from './shared/interfaces';
-import { IPaginationQuery, ISrvPaginationResponse } from './shared/srv-pagination/srv-pagination.interfaces';
+import { IPaginationQuery, IPaginationVM } from './shared/srv-pagination/srv-pagination.interfaces';
 
 @Component({
   selector: 'app-root',
@@ -10,16 +10,16 @@ import { IPaginationQuery, ISrvPaginationResponse } from './shared/srv-paginatio
 })
 export class AppComponent implements OnInit {
   itemsFiltered: GetWeatherForecastResponseDto[] = [];
-  weatherURL: string = 'https://localhost:7248/WeatherForecast';
-  pagination!: ISrvPaginationResponse;
+  weatherURL: string = 'https://localhost:55000/WeatherForecast';
+  pagination!: IPaginationVM;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.getWeather({currentPage:1,pageSize:10});
+    this.getWeather({ currentPage: 1, pageSize: 10 });
   }
 
-  private getWeather(pagination:IPaginationQuery) {
+  private getWeather(pagination: IPaginationQuery) {
     const params = new HttpParams()
       .append('Metadata.PageSize', pagination.pageSize)
       .append('Metadata.CurrentPage', pagination.currentPage);
@@ -28,17 +28,22 @@ export class AppComponent implements OnInit {
       .get<GetWeatherForecastResponse>(this.weatherURL, { params })
       .subscribe((response) => {
         this.itemsFiltered = response.items;
-        this.pagination = response.metadata;
+
+        var recStart = (response.metadata.currentPage == 1) ? 1 : response.metadata.currentPage * response.metadata.pageSize +1 - response.metadata.pageSize;
+        var recEnd = (response.metadata.currentPage == 1) ? response.metadata.pageSize : response.metadata.currentPage * response.metadata.pageSize ;
+
+        this.pagination = { ...response.metadata, recordStart: recStart, recordEnd: recEnd };
+
       });
   }
 
-  pageChanged( pagination: IPaginationQuery) {
+  pageChanged(pagination: IPaginationQuery) {
     this.getWeather(pagination);
   }
 }
 
 export interface GetWeatherForecastResponse
-  extends GetResponse<GetWeatherForecastResponseDto> {}
+  extends GetResponse<GetWeatherForecastResponseDto> { }
 
 export interface GetWeatherForecastResponseDto {
   id: number;

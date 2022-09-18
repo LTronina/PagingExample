@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IPaginationQuery, ISrvPaginationResponse } from './srv-pagination.interfaces';
+import { IPaginationQuery, IPaginationVM } from './srv-pagination.interfaces';
 
 @Component({
   selector: 'srv-pagination',
@@ -7,10 +7,10 @@ import { IPaginationQuery, ISrvPaginationResponse } from './srv-pagination.inter
   styleUrls: ['./srv-pagination.component.scss'],
 })
 export class SrvPaginationComponent implements OnInit {
-  @Input() get config(): ISrvPaginationResponse {
+  @Input() get config(): IPaginationVM {
     return this._config;
   }
-  set config(config: ISrvPaginationResponse) {
+  set config(config: IPaginationVM) {
     this._config = config;
     this.update();
   }
@@ -20,7 +20,7 @@ export class SrvPaginationComponent implements OnInit {
   selectedPageSize: number = this.pageSizes[0];
   currentPage: number = 0;
 
-  private _config!: ISrvPaginationResponse;
+  private _config!: IPaginationVM;
 
   constructor() {}
   ngOnInit(): void {}

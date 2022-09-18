@@ -6,7 +6,7 @@
       {{ size }}
     </option>
   </select>
-  <span class="me-3 noselect"> {{config.currentPage}} - {{config.pageSize}} z {{config.totalCount}}</span>
+  <span class="me-3 noselect"> {{config.recordStart}} - {{ config.recordEnd}} z {{config.totalCount}}</span>
   <nav aria-label="..." style="display: inline-block;">
     <ul class="pagination">
       <li class="page-item" [class.disabled]="config.currentPage == 1" (click)="first($event)">

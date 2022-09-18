@@ -8,3 +8,10 @@ export interface ISrvPaginationResponse extends IPaginationQuery {
   hasNext: boolean;
   hasPrevious: boolean;
 }
+
+
+export interface IPaginationVM extends ISrvPaginationResponse {
+  recordStart: number;
+  recordEnd: number;
+}
+
