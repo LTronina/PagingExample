@@ -1,5 +1,5 @@
 <ng-container *ngIf="config && config.totalPages >1" >
-  <span class="noselect">Rozmiar strony</span>
+  <span class="noselect">{{translation.pageSizeLabel}}</span>
   <select class="ms-2 me-3 form-select" (change)="changeSize($event)" [(ngModel)]="selectedPageSize"
     style="width: 70px;display: inline;">
     <option *ngFor="let size of pageSizes" [ngValue]="size">
@@ -23,7 +23,7 @@
           </svg>
         </a>
       </li>
-      <input title ="Wpisz wartość i naciśnij enter." type="number" class="currentPage" [(ngModel)]="currentPage"  (keyup.enter)="changePageFromInput($event)">
+      <input title ={{translation.pageInputTooltip}} type="number" class="currentPage" [(ngModel)]="currentPage"  (keyup.enter)="changePageFromInput($event)">
 
       <li class="page-item" [class.disabled]="!config.hasNext" (click)="previousNext(1, $event)">
         <a class="page-link" href="#"><svg viewBox="0 0 24 24" focusable="false" class="pictogram">

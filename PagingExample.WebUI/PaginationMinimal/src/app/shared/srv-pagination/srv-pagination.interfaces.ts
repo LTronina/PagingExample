@@ -15,3 +15,8 @@ export interface IPaginationVM extends ISrvPaginationResponse {
   recordEnd: number;
 }
 
+export class PaginationTranslation {
+   pageInputTooltip = "Enter value and hit Enter key.";
+   pageSizeLabel ="Page size";
+
+}

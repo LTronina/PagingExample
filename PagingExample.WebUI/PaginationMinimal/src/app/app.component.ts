@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { GetResponse } from './shared/interfaces';
-import { IPaginationQuery, IPaginationVM } from './shared/srv-pagination/srv-pagination.interfaces';
+import { IPaginationQuery, IPaginationVM, PaginationTranslation } from './shared/srv-pagination/srv-pagination.interfaces';
+import { TranslationWidth } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +10,24 @@ import { IPaginationQuery, IPaginationVM } from './shared/srv-pagination/srv-pag
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+
+
   itemsFiltered: GetWeatherForecastResponseDto[] = [];
   weatherURL: string = 'https://localhost:55000/WeatherForecast';
   pagination!: IPaginationVM;
+  pagingSTranslation: PaginationTranslation;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    var tr = new PaginationTranslation();
+    tr.pageInputTooltip = "Wpisz wartość i naciśnij Enter";
+    tr.pageSizeLabel= "Rozmiar strony";
+    this.pagingSTranslation = tr;
+
+  }
 
   ngOnInit(): void {
     this.getWeather({ currentPage: 1, pageSize: 10 });
+
   }
 
   private getWeather(pagination: IPaginationQuery) {
@@ -29,8 +40,8 @@ export class AppComponent implements OnInit {
       .subscribe((response) => {
         this.itemsFiltered = response.items;
 
-        var recStart = (response.metadata.currentPage == 1) ? 1 : response.metadata.currentPage * response.metadata.pageSize +1 - response.metadata.pageSize;
-        var recEnd = (response.metadata.currentPage == 1) ? response.metadata.pageSize : response.metadata.currentPage * response.metadata.pageSize ;
+        var recStart = (response.metadata.currentPage == 1) ? 1 : response.metadata.currentPage * response.metadata.pageSize + 1 - response.metadata.pageSize;
+        var recEnd = (response.metadata.currentPage == 1) ? response.metadata.pageSize : response.metadata.currentPage * response.metadata.pageSize;
 
         this.pagination = { ...response.metadata, recordStart: recStart, recordEnd: recEnd };
 

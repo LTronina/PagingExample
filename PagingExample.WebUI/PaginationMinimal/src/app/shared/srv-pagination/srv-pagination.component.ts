@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IPaginationQuery, IPaginationVM } from './srv-pagination.interfaces';
+import {
+  IPaginationQuery,
+  IPaginationVM,
+  PaginationTranslation,
+} from './srv-pagination.interfaces';
 
 @Component({
   selector: 'srv-pagination',
@@ -7,6 +11,8 @@ import { IPaginationQuery, IPaginationVM } from './srv-pagination.interfaces';
   styleUrls: ['./srv-pagination.component.scss'],
 })
 export class SrvPaginationComponent implements OnInit {
+  @Input() translation: PaginationTranslation = new PaginationTranslation();
+
   @Input() get config(): IPaginationVM {
     return this._config;
   }
@@ -58,7 +64,10 @@ export class SrvPaginationComponent implements OnInit {
     if (this.config.currentPage === page) {
       return;
     }
-    this.pageChanged.emit({ currentPage: page, pageSize: this.config.pageSize });
+    this.pageChanged.emit({
+      currentPage: page,
+      pageSize: this.config.pageSize,
+    });
   }
 
   changeSize($event: Event) {
