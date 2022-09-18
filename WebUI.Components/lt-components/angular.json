@@ -3,23 +3,23 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "lt-components-lib": {
+    "lta-components-lib": {
       "projectType": "library",
-      "root": "projects/lt-components-lib",
-      "sourceRoot": "projects/lt-components-lib/src",
+      "root": "projects/lta-components-lib",
+      "sourceRoot": "projects/lta-components-lib/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/lt-components-lib/ng-package.json"
+            "project": "projects/lta-components-lib/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/lt-components-lib/tsconfig.lib.prod.json"
+              "tsConfig": "projects/lta-components-lib/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/lt-components-lib/tsconfig.lib.json"
+              "tsConfig": "projects/lta-components-lib/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,9 +27,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/lt-components-lib/src/test.ts",
-            "tsConfig": "projects/lt-components-lib/tsconfig.spec.json",
-            "karmaConfig": "projects/lt-components-lib/karma.conf.js"
+            "main": "projects/lta-components-lib/src/test.ts",
+            "tsConfig": "projects/lta-components-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/lta-components-lib/karma.conf.js"
           }
         }
       }

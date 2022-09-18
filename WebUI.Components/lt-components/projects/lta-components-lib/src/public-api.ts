@@ -1,5 +1,5 @@
 /*
- * Public API Surface of lt-components-lib
+ * Public API Surface of lta-components-lib
  */
 
 export * from './lib/srv-pagination/srv-pagination.module';
