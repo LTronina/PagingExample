@@ -1,0 +1,42 @@
+<ng-container *ngIf="config && config.totalPages >1" >
+  <span class="noselect">{{translation.pageSizeLabel}}</span>
+  <select class="ms-2 me-3 form-select" (change)="changeSize($event)" [(ngModel)]="selectedPageSize"
+    style="width: 70px;display: inline;">
+    <option *ngFor="let size of pageSizes" [ngValue]="size">
+      {{ size }}
+    </option>
+  </select>
+  <span class="me-3 noselect"> {{config.recordStart}} - {{ config.recordEnd}} z {{config.totalCount}}</span>
+  <nav aria-label="..." style="display: inline-block;">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="config.currentPage == 1" (click)="first($event)">
+        <a class="page-link" href="#">
+          <svg viewBox="0 0 24 24" focusable="false" class="pictogram">
+            <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"></path>
+          </svg>
+        </a>
+      </li>
+      <li class="page-item" [class.disabled]="!config.hasPrevious" (click)="previousNext(-1, $event)">
+        <a class="page-link" href="#">
+          <svg viewBox="0 0 24 24" focusable="false" class="pictogram">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+          </svg>
+        </a>
+      </li>
+      <input title ={{translation.pageInputTooltip}} type="number" class="currentPage" [(ngModel)]="currentPage"  (keyup.enter)="changePageFromInput($event)">
+
+      <li class="page-item" [class.disabled]="!config.hasNext" (click)="previousNext(1, $event)">
+        <a class="page-link" href="#"><svg viewBox="0 0 24 24" focusable="false" class="pictogram">
+            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+          </svg></a>
+      </li>
+      <li class="page-item" [class.disabled]="config.currentPage ==config.totalPages" (click)="last($event)"  >
+        <a class="page-link" href="#">
+          <svg viewBox="0 0 24 24" focusable="false" class="pictogram">
+            <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"></path>
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</ng-container>

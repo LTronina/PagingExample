@@ -2,6 +2,7 @@
  * Public API Surface of lt-components-lib
  */
 
-export * from './lib/lt-components-lib.service';
-export * from './lib/lt-components-lib.component';
-export * from './lib/lt-components-lib.module';
+export * from './lib/srv-pagination/srv-pagination.module';
+export * from './lib/srv-pagination/srv-pagination.component';
+export * from './lib/srv-pagination/srv-pagination.interfaces';
+
