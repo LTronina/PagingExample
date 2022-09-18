@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { SrvPaginationModule } from './shared/srv-pagination/srv-pagination.module';
+import { SrvPaginationModule } from '../../node_modules/lta-components-lib/index';
+
 
 
 @NgModule({

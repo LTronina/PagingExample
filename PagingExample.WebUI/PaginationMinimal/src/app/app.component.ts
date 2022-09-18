@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { GetResponse } from './shared/interfaces';
-import { IPaginationQuery, IPaginationVM, PaginationTranslation } from './shared/srv-pagination/srv-pagination.interfaces';
-import { TranslationWidth } from '@angular/common';
+import { IPaginationQuery, IPaginationVM, PaginationTranslation } from '../../node_modules/lta-components-lib/public-api';
 
 @Component({
   selector: 'app-root',
