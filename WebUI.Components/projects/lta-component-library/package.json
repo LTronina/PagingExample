@@ -1,5 +1,5 @@
 {
-  "name": "lta-components-lib",
+  "name": "lta-component-library",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^14.2.0",

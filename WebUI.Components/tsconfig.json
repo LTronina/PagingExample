@@ -10,8 +10,8 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "paths": {
-      "lta-components-lib": [
-        "dist/lta-components-lib"
+      "lta-component-library": [
+        "dist/lta-component-library"
       ]
     },
     "noFallthroughCasesInSwitch": true,
