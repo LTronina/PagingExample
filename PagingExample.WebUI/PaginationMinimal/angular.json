@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "preserveSymlinks": true,
             "outputPath": "dist/pagination-minimal",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -28,12 +29,12 @@
               "src/assets"
             ],
             "styles": [
-              "../node_modules/bootstrap/scss/bootstrap.scss",
+
 
               "src/styles.scss"
             ]
             ,
-            "scripts": [ "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
+            "scripts": [ ]
           },
           "configurations": {
             "production": {

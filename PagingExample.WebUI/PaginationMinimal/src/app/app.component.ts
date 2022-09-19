@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { GetResponse } from './shared/interfaces';
-import { IPaginationQuery, IPaginationVM, PaginationTranslation } from '../../node_modules/lta-components-lib/public-api';
+import { IPaginationQuery, IPaginationVM, PaginationTranslation } from 'lta-component-library';
 
 @Component({
   selector: 'app-root',

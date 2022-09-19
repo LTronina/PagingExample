@@ -1,4 +1,4 @@
-import { ISrvPaginationResponse } from '../../../node_modules/lta-components-lib/public-api';
+import { ISrvPaginationResponse } from 'lta-component-library/public-api';
 
 
 export interface GetResponse<T> {

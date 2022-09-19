@@ -26,7 +26,16 @@ export class SrvPaginationComponent implements OnInit {
   selectedPageSize: number = this.pageSizes[0];
   currentPage: number = 0;
 
-  private _config!: IPaginationVM;
+  private _config: IPaginationVM ={
+    recordStart: 0,
+    recordEnd: 0,
+    totalCount: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrevious: false,
+    currentPage: 0,
+    pageSize: 0
+  };
 
   constructor() {}
   ngOnInit(): void {}

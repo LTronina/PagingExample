@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { SrvPaginationModule } from '../../node_modules/lta-component-library/public-api';
+import { SrvPaginationModule } from 'lta-component-library';
 
 
 
@@ -12,5 +12,6 @@ import { SrvPaginationModule } from '../../node_modules/lta-component-library/pu
   imports: [BrowserModule, HttpClientModule,SrvPaginationModule],
   providers: [],
   bootstrap: [AppComponent],
+  exports:[SrvPaginationModule]
 })
 export class AppModule {}
