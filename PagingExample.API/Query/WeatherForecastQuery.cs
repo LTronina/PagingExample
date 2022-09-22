@@ -2,9 +2,16 @@
 
 namespace PagingExample.Query
 {
-    public record WeatherForecastQuery
+    public class WeatherForecastQuery
     {
         public WeatherForecastMetadata Metadata { get; set; }
+        public string[] Summaries { get; set; }
+
+        public WeatherForecastQuery()
+        {
+            Summaries = Array.Empty<string>();
+            Metadata = new WeatherForecastMetadata();
+        }
     }
 
     public class WeatherForecastMetadata : IMetaQueryFields

@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using PagingExample.Command;
+using PagingExample.MetaSettings;
+using PagingExample.Query;
 using System.Diagnostics;
 
 namespace PagingExample.Controllers

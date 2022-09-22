@@ -22,7 +22,11 @@
         public bool HasNext { get; set; }
         public bool HasPrevious { get; set; }
 
-        public string CsrfToken { get; set; }
+        public string? CsrfToken { get; set; }
+
+        public MetadataGetResponseFields() : this(0, 0, 0)
+        {
+        }
 
         public MetadataGetResponseFields(int totalCount, int pageSize, int currentPage)
         {
