@@ -5,11 +5,10 @@ namespace PagingExample.Query
     public class WeatherForecastQuery
     {
         public WeatherForecastMetadata Metadata { get; set; }
-        public string[] Summaries { get; set; }
+        public IEnumerable<string>? Summaries { get; set; }
 
         public WeatherForecastQuery()
         {
-            Summaries = Array.Empty<string>();
             Metadata = new WeatherForecastMetadata();
         }
     }

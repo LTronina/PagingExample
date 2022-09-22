@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using PagingExample.Command;
 using PagingExample.MetaSettings;
 using PagingExample.Query;
-using System.Diagnostics;
 
 namespace PagingExample.Controllers
 {
@@ -23,7 +22,7 @@ namespace PagingExample.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public WeatherForecastResponse Get([FromQuery] WeatherForecastQuery query)
+        public IActionResult Get([FromQuery] WeatherForecastQuery query)
         {
             var dbResult = Enumerable
                 .Range(1, 500)
@@ -36,13 +35,23 @@ namespace PagingExample.Controllers
                 })
              .ToArray();
 
+            if (query.Summaries?.Any() == true)
+            {
+                dbResult = dbResult.Where(x => query.Summaries.Contains(x.Summary)).ToArray();
+            }
+
+            if (!dbResult.Any())
+            {
+                return NotFound();
+            }
+
             var response = new WeatherForecastResponse()
             {
                 Items = dbResult.Skip((query.Metadata.CurrentPage - 1) * query.Metadata.PageSize).Take(query.Metadata.PageSize),
                 Metadata = new MetadataGetResponseFields(dbResult.Length, query.Metadata.PageSize, query.Metadata.CurrentPage)
             };
 
-            return response;
+            return Ok(response);
         }
     }
 }

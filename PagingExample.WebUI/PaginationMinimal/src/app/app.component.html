@@ -1,4 +1,26 @@
 <div class="container">
+  <nav class="navbar navbar-light bg-light mb-5">
+    <div class="container-fluid">
+      <a class="navbar-brand">Navbar</a>
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          [(ngModel)]="filter" [ngModelOptions]="{standalone: true}"
+        />
+        <button
+          class="btn btn-outline-success"
+          type="submit"
+          (click)="Search()"
+        >
+          Search
+        </button>
+      </form>
+    </div>
+  </nav>
+
   <table class="table">
     <thead>
       <tr>
