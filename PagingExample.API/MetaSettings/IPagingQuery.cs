@@ -1,17 +1,5 @@
-﻿namespace PagingExample
+﻿namespace PagingExample.MetaSettings
 {
-    public interface IMetaGetQuery
-    {
-        Metadata Metadata { get; set; }
-    }
-
-    public class Metadata : IMetaQueryFields
-    {
-        public int CurrentPage { get; set; }
-        public int PageSize { get; set; }
-        public string? CsrfToken { get; set; }
-    }
-
     /// <summary>
     /// project wide used for get
     /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace PagingExample
+﻿namespace PagingExample.MetaSettings
 {
     public interface IMetaGetResponse<T>
     {
@@ -26,12 +26,12 @@
 
         public MetadataGetResponseFields(int totalCount, int pageSize, int currentPage)
         {
-            this.TotalCount = totalCount;
-            this.PageSize = pageSize;
-            this.CurrentPage = currentPage;
-            this.TotalPages = (int)Math.Ceiling((float)totalCount / pageSize);
-            this.HasNext = currentPage < this.TotalPages;
-            this.HasPrevious = currentPage > 1;
+            TotalCount = totalCount;
+            PageSize = pageSize;
+            CurrentPage = currentPage;
+            TotalPages = (int)Math.Ceiling((float)totalCount / pageSize);
+            HasNext = currentPage < TotalPages;
+            HasPrevious = currentPage > 1;
         }
     }
 

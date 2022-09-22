@@ -1,4 +1,6 @@
-namespace PagingExample
+using PagingExample.MetaSettings;
+
+namespace PagingExample.Command
 {
     public record WeatherForecastResponse : IMetaGetResponse<WeatherForecastResponseDto>
     {
