@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   IPaginationQuery,
   IPaginationVM,
+  ISrvPaginationResponse,
   PaginationTranslation,
 } from './srv-pagination.interfaces';
 
@@ -16,8 +17,28 @@ export class SrvPaginationComponent implements OnInit {
   @Input() get config(): IPaginationVM {
     return this._config;
   }
-  set config(config: IPaginationVM) {
-    this._config = config;
+
+  set config(config: ISrvPaginationResponse) {
+    if ( config !=null){
+      var recStart =
+      config.currentPage == 1
+        ? 1
+        : config.currentPage * config.pageSize + 1 - config.pageSize;
+    var recEnd =
+      config.currentPage == 1
+        ? config.pageSize
+        : config.currentPage * config.pageSize;
+
+    this._config = {
+      ...config,
+      recordStart: recStart,
+      recordEnd: recEnd,
+    };
+    }
+    else{
+      this._config = this.defaultConfig
+    }
+
     this.update();
   }
 
@@ -26,16 +47,19 @@ export class SrvPaginationComponent implements OnInit {
   selectedPageSize: number = this.pageSizes[0];
   currentPage: number = 0;
 
-  private _config: IPaginationVM ={
-    recordStart: 0,
-    recordEnd: 0,
-    totalCount: 0,
-    totalPages: 0,
-    hasNext: false,
-    hasPrevious: false,
-    currentPage: 0,
-    pageSize: 0
-  };
+ private defaultConfig :IPaginationVM = {
+  recordStart: 0,
+  recordEnd: 0,
+  totalCount: 0,
+  totalPages: 0,
+  hasNext: false,
+  hasPrevious: false,
+  currentPage: 0,
+  pageSize: 0,
+};
+
+
+  private _config: IPaginationVM = this.defaultConfig;
 
   constructor() {}
   ngOnInit(): void {}

@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { GetResponse } from './shared/interfaces';
 import {
   IPaginationQuery,
-  IPaginationVM,
+  ISrvPaginationResponse,
   PaginationTranslation,
 } from 'lta-component-library';
 import { catchError } from 'rxjs';
@@ -16,7 +16,7 @@ import { catchError } from 'rxjs';
 export class AppComponent implements OnInit {
   itemsFiltered: GetWeatherForecastResponseDto[] = [];
   weatherURL: string = 'https://localhost:55000/WeatherForecast';
-  pagination!: IPaginationVM;
+  pagination!: ISrvPaginationResponse;
   pagingSTranslation: PaginationTranslation;
   @Input() filter: string = '';
 
@@ -60,22 +60,9 @@ export class AppComponent implements OnInit {
       .subscribe((response) => {
         this.itemsFiltered = response.items;
 
-        var recStart =
-          response.metadata.currentPage == 1
-            ? 1
-            : response.metadata.currentPage * response.metadata.pageSize +
-              1 -
-              response.metadata.pageSize;
-        var recEnd =
-          response.metadata.currentPage == 1
-            ? response.metadata.pageSize
-            : response.metadata.currentPage * response.metadata.pageSize;
+        this.pagination = response.metadata
 
-        this.pagination = {
-          ...response.metadata,
-          recordStart: recStart,
-          recordEnd: recEnd,
-        };
+
       });
   }
 
