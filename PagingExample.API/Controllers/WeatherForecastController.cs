@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PagingExample.Command;
+using PagingExample.Extensions;
 using PagingExample.MetaSettings;
 using PagingExample.Query;
 
@@ -33,11 +34,25 @@ namespace PagingExample.Controllers
                     TemperatureC = Random.Shared.Next(-20, 55),
                     Summary = Summaries[Random.Shared.Next(Summaries.Length)]
                 })
-             .ToArray();
+             .AsQueryable();
+
+            if (query.Sorting?.Any() == true)
+            {
+                foreach (var item in query.Sorting)
+                {
+                    if (!string.IsNullOrEmpty(item.Key) && !string.IsNullOrEmpty(item.Value))
+                    {
+                        if (typeof(WeatherForecastResponseDto).GetProperty(item.Key) != null)
+                        {
+                            dbResult = dbResult.OrderByCustom(item);
+                        }
+                    }
+                }
+            }
 
             if (query.Summaries?.Any() == true)
             {
-                dbResult = dbResult.Where(x => query.Summaries.Contains(x.Summary)).ToArray();
+                dbResult = dbResult.Where(x => query.Summaries.Contains(x.Summary));
             }
 
             if (!dbResult.Any())
@@ -48,7 +63,7 @@ namespace PagingExample.Controllers
             var response = new WeatherForecastResponse()
             {
                 Items = dbResult.Skip((query.Metadata.CurrentPage - 1) * query.Metadata.PageSize).Take(query.Metadata.PageSize),
-                Metadata = new MetadataGetResponseFields(dbResult.Length, query.Metadata.PageSize, query.Metadata.CurrentPage)
+                Metadata = new MetadataGetResponseFields(dbResult.Count(), query.Metadata.PageSize, query.Metadata.CurrentPage)
             };
 
             return Ok(response);

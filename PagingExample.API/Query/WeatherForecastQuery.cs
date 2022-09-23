@@ -6,6 +6,7 @@ namespace PagingExample.Query
     {
         public WeatherForecastMetadata Metadata { get; set; }
         public IEnumerable<string>? Summaries { get; set; }
+        public IDictionary<string, string>? Sorting { get; set; }
 
         public WeatherForecastQuery()
         {

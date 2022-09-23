@@ -6,7 +6,7 @@ import {
 } from './srv-pagination.interfaces';
 
 @Component({
-  selector: 'srv-pagination',
+  selector: 'lib-srv-pagination',
   templateUrl: './srv-pagination.component.html',
   styleUrls: ['./srv-pagination.component.scss'],
 })

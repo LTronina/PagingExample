@@ -24,10 +24,10 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Id</th>
+        <th    >Id   </th>
         <th>Date</th>
-        <th>TemperatureC</th>
-        <th>TemperatureF</th>
+        <th lib-srv-sorting [name]="'TemperatureC'" (onSorting)="Sort($event)">  TemperatureC</th>
+        <th lib-srv-sorting [name]="'TemperatureF'" (onSorting)="Sort($event)">TemperatureF </th>
         <th>Summary</th>
       </tr>
     </thead>
@@ -47,11 +47,11 @@
       </tr>
     </tfoot>
   </table>
-  <srv-pagination
+  <lib-srv-pagination
     [config]="pagination"
     (pageChanged)="pageChanged($event)"
     [pageSizes]="[5, 10, 15, 20]"
     class="srv-pagination"
     [translation]="pagingSTranslation"
-  ></srv-pagination>
+  ></lib-srv-pagination>
 </div>

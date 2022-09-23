@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { GetResponse } from './shared/interfaces';
 import {
   IPaginationQuery,
@@ -31,23 +31,32 @@ export class AppComponent implements OnInit {
     this.getWeather({ currentPage: 1, pageSize: 10 });
   }
 
-  private getWeather(pagination: IPaginationQuery) {
+  private getWeather(
+    pagination: IPaginationQuery,
+    sortingParams?: { [name: string]: string }
+  ) {
     let params = new HttpParams()
       .append('Metadata.PageSize', pagination.pageSize)
       .append('Metadata.CurrentPage', pagination.currentPage);
 
     if (this.filter) {
-      params = params.appendAll( {Summaries: [this.filter]} );
+      params = params.appendAll({ Summaries: [this.filter] });
+    }
+
+    if (sortingParams) {
+      Object.entries(sortingParams).forEach(([key, value], index) => {
+        params = params.append(`Sorting[${key}]`, value);
+      });
     }
 
     this.http
-      .get<GetWeatherForecastResponse>(this.weatherURL, { params }).pipe(
-        catchError(error => {
-          console.log('Error: ' +error)
-          throw(error);
+      .get<GetWeatherForecastResponse>(this.weatherURL, { params })
+      .pipe(
+        catchError((error) => {
+          console.log('Error: ' + error);
+          throw error;
         })
-
-       )
+      )
       .subscribe((response) => {
         this.itemsFiltered = response.items;
 
@@ -75,8 +84,13 @@ export class AppComponent implements OnInit {
   }
 
   Search() {
-    this.itemsFiltered = []
+    this.itemsFiltered = [];
     this.getWeather({ currentPage: 1, pageSize: 10 });
+  }
+
+  Sort(sortingParams: { [name: string]: string }) {
+    this.itemsFiltered = [];
+    this.getWeather({ currentPage: 1, pageSize: 10 }, sortingParams);
   }
 }
 
