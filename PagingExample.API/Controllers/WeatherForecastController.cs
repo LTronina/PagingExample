@@ -17,15 +17,14 @@ namespace PagingExample.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
+        private static List<WeatherForecastResponseDto> data;
+
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-        }
-
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IActionResult Get([FromQuery] WeatherForecastQuery query)
-        {
-            var dbResult = Enumerable
+            if (data == null)
+            {
+                data = Enumerable
                 .Range(1, 500)
                 .Select(index => new WeatherForecastResponseDto
                 {
@@ -34,7 +33,14 @@ namespace PagingExample.Controllers
                     TemperatureC = Random.Shared.Next(-20, 55),
                     Summary = Summaries[Random.Shared.Next(Summaries.Length)]
                 })
-             .AsQueryable();
+             .ToList();
+            }
+        }
+
+        [HttpGet(Name = "GetWeatherForecast")]
+        public IActionResult Get([FromQuery] WeatherForecastQuery query)
+        {
+            var dbResult = data.AsQueryable();
 
             if (query.Sorting?.Any() == true)
             {

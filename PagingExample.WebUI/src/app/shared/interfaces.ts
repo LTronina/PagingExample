@@ -1,10 +1,13 @@
-import { ISrvPaginationResponse } from 'lta-component-library/public-api';
-
+import {
+  IPaginationQuery,
+  ISrvPaginationResponse,
+} from 'lta-component-library/public-api';
 
 export interface GetResponse<T> {
-  metadata: IMetadataGetResponseFields;
+  metadata: ISrvPaginationResponse;
   items: T[];
 }
 
-export interface IMetadataGetResponseFields extends ISrvPaginationResponse {
-}
+
+
+
