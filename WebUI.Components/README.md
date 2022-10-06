@@ -26,3 +26,9 @@ ng build --project=lta-component-library --watch
 //in consumer
 npm link lta-component-library
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.3.
+
+#publish package
+ng build --project=lta-component-library -c=production
+npm login
+cd .\dist\lta-component-library\
+npm publish
