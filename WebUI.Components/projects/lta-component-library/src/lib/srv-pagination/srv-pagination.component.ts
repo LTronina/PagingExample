@@ -19,24 +19,29 @@ export class SrvPaginationComponent implements OnInit {
   }
 
   set config(config: ISrvPaginationResponse) {
-    if ( config !=null){
+    if (config != null) {
       var recStart =
-      config.currentPage == 1
-        ? 1
-        : config.currentPage * config.pageSize + 1 - config.pageSize;
-    var recEnd =
-      config.currentPage == 1
-        ? config.pageSize
-        : config.currentPage * config.pageSize;
+        config.currentPage == 1
+          ? 1
+          : config.currentPage * config.pageSize + 1 - config.pageSize;
+      var recEnd = 0;
 
-    this._config = {
-      ...config,
-      recordStart: recStart,
-      recordEnd: recEnd,
-    };
-    }
-    else{
-      this._config = this.defaultConfig
+      if (config.currentPage != config.totalPages) {
+        recEnd = config.currentPage * config.pageSize;
+      } else {
+        const mod = config.totalCount % config.pageSize;
+        recEnd =
+          (config.currentPage - 1) * config.pageSize +
+          (mod != 0 ? mod : config.pageSize);
+      }
+
+      this._config = {
+        ...config,
+        recordStart: recStart,
+        recordEnd: recEnd,
+      };
+    } else {
+      this._config = this.defaultConfig;
     }
 
     this.update();
@@ -47,17 +52,16 @@ export class SrvPaginationComponent implements OnInit {
   selectedPageSize: number = this.pageSizes[0];
   currentPage: number = 0;
 
- private defaultConfig :IPaginationVM = {
-  recordStart: 0,
-  recordEnd: 0,
-  totalCount: 0,
-  totalPages: 0,
-  hasNext: false,
-  hasPrevious: false,
-  currentPage: 0,
-  pageSize: 0,
-};
-
+  private defaultConfig: IPaginationVM = {
+    recordStart: 0,
+    recordEnd: 0,
+    totalCount: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrevious: false,
+    currentPage: 0,
+    pageSize: 0,
+  };
 
   private _config: IPaginationVM = this.defaultConfig;
 

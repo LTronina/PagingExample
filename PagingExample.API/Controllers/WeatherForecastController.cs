@@ -25,7 +25,7 @@ namespace PagingExample.Controllers
             if (data == null)
             {
                 data = Enumerable
-                .Range(1, 12)
+                .Range(1, 30)
                 .Select(index => new WeatherForecastResponseDto(new Region() { Id = index, Name = StringExtensions.RandomString(10) })
                 {
                     Id = index,
@@ -44,8 +44,6 @@ namespace PagingExample.Controllers
 
             dbResult = dbResult.OrderByCustom(query.Sorting,
                 new KeyValuePair<string, bool>(nameof(WeatherForecastResponseDto.Id), true));
-
-            
 
             if (query.Summaries?.Any() == true)
             {
