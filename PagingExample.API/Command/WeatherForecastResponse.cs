@@ -24,5 +24,18 @@ namespace PagingExample.Command
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 
         public string? Summary { get; set; }
+
+        public Region Region { get; set; }
+
+        public WeatherForecastResponseDto(Region region)
+        {
+            this.Region = region;
+        }
+    }
+
+    public class Region
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

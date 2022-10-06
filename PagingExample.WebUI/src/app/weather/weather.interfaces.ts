@@ -1,5 +1,5 @@
-import { IPaginationQuery } from "lta-component-library";
-import { GetResponse } from "../shared/interfaces";
+import { IPaginationQuery } from 'lta-component-library';
+import { GetResponse } from '../shared/interfaces';
 
 export interface GetWeatherForecastResponse
   extends GetResponse<GetWeatherForecastResponseDto> {}
@@ -10,6 +10,7 @@ export interface GetWeatherForecastResponseDto {
   temperatureC: number;
   temperatureF: number;
   summary: string;
+  region: { id: number; name: string };
 }
 
 export interface IWeatherQuery extends IPaginationQuery {

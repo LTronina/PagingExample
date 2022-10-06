@@ -34,6 +34,9 @@
           TemperatureF
         </th>
         <th>Summary</th>
+        <th lib-srv-sorting [name]="'Region.Name'" (onSorting)="Sort($event)">
+          Region
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -43,6 +46,7 @@
         <td>{{ item.temperatureC }}</td>
         <td>{{ item.temperatureF }}</td>
         <td>{{ item.summary }}</td>
+        <td>{{ item.region.name }}</td>
       </tr>
     </tbody>
     <tfoot>

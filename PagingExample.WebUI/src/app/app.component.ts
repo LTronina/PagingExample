@@ -3,7 +3,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ISrvPaginationResponse } from 'lta-component-library';
 import { catchError } from 'rxjs';
-import { GetWeatherForecastResponse, GetWeatherForecastResponseDto, IWeatherQuery } from './weather/weather.interfaces';
+import {
+  GetWeatherForecastResponse,
+  GetWeatherForecastResponseDto,
+  IWeatherQuery,
+} from './weather/weather.interfaces';
 
 @Component({
   selector: 'app-root',
@@ -36,7 +40,10 @@ export class AppComponent implements OnInit {
 
     if (query.sortingParams) {
       Object.entries(query.sortingParams).forEach(([key, value], index) => {
-        params = params.append(`Sorting[${key}]`, value);
+        params = params.append(
+          `Sorting[${key}]`,
+          value === 'desc' ? true : false
+        );
       });
     }
 

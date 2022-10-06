@@ -25,8 +25,8 @@ namespace PagingExample.Controllers
             if (data == null)
             {
                 data = Enumerable
-                .Range(1, 500)
-                .Select(index => new WeatherForecastResponseDto
+                .Range(1, 12)
+                .Select(index => new WeatherForecastResponseDto(new Region() { Id = index, Name = StringExtensions.RandomString(10) })
                 {
                     Id = index,
                     Date = DateTime.Now.AddDays(index),
@@ -42,19 +42,10 @@ namespace PagingExample.Controllers
         {
             var dbResult = data.AsQueryable();
 
-            if (query.Sorting?.Any() == true)
-            {
-                foreach (var item in query.Sorting)
-                {
-                    if (!string.IsNullOrEmpty(item.Key) && !string.IsNullOrEmpty(item.Value))
-                    {
-                        if (typeof(WeatherForecastResponseDto).GetProperty(item.Key) != null)
-                        {
-                            dbResult = dbResult.OrderByCustom(item);
-                        }
-                    }
-                }
-            }
+            dbResult = dbResult.OrderByCustom(query.Sorting,
+                new KeyValuePair<string, bool>(nameof(WeatherForecastResponseDto.Id), true));
+
+            
 
             if (query.Summaries?.Any() == true)
             {
