@@ -25,7 +25,7 @@ namespace PagingExample.Controllers
             if (data == null)
             {
                 data = Enumerable
-                .Range(1, 30)
+                .Range(1, 27)
                 .Select(index => new WeatherForecastResponseDto(new Region() { Id = index, Name = StringExtensions.RandomString(10) })
                 {
                     Id = index,
