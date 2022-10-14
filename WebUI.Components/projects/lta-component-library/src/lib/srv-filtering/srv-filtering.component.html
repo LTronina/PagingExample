@@ -1,0 +1,40 @@
+<div class="drow">
+  <div class="dLeftColumn">
+    <table class="table table-sm" style="width: 100%">
+      <thead>
+        <tr>
+          <th
+            scope="col"
+            *ngFor="let column of config?.columns"
+            [ngStyle]="column?.style"
+            [ngClass]="column?.filterColumn ? 'columnWidth' : ''"
+          >
+            {{ column?.name }}
+            <input
+              *ngIf="column?.filterColumn && config?.showFilter"
+              type="search"
+              class="form-control"
+              [(ngModel)]="column.filter.values[0]"
+              (ngModelChange)="filterChanged()"
+            />
+          </th>
+        </tr>
+      </thead>
+
+      <ng-content></ng-content>
+    </table>
+  </div>
+
+  <div class="dRighttColumn">
+    <div class="form-check form-switch">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [(ngModel)]="config.showFilter"
+      />
+      <label class="form-check-label" for="flexSwitchCheckChecked"
+        >Filter</label
+      >
+    </div>
+  </div>
+</div>

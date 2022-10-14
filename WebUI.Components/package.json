@@ -1,6 +1,6 @@
 {
   "name": "lta-component-library",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Small lib for Angular : paging, sorting etc",
   "author": "Lucjan Tronina",
   "repository": {

@@ -6,11 +6,12 @@ Small lib for Angular with few components paging, sorting etc
 
 Sorting
 
-   <th lib-srv-sorting [name]="'TemperatureC'" (onSorting)="Sort($event)">
+<th lib-srv-sorting [name]="'TemperatureC'" (onSorting)="Sort($event)">
           TemperatureC
-    </th>
+</th>
 
-Filtering
+Pagination
+
 <lib-srv-pagination
 [config]="pagination"
 (pageChanged)="pageChanged($event)"
@@ -19,6 +20,17 @@ class="srv-pagination"
 [translation]="pagingSTranslation"
 
 > </lib-srv-pagination>
+
+Filtering
+
+<lib-srv-filtering
+[config]="vm.config"
+(filterChange)="filterChangedHandler($event)" >
+
+<tbody>
+ your table 
+</tbody>
+</lib-srv-filtering>
 
 ## Development server
 

@@ -1,0 +1,26 @@
+$searchFieldWidth: 135px;
+
+input.form-control {
+  max-width: $searchFieldWidth;
+  max-height: 1.5rem;
+}
+
+.columnWidth {
+  min-width: $searchFieldWidth;
+}
+
+th {
+  vertical-align: text-top;
+}
+
+.drow {
+  display: flex;
+  width: 100%;
+}
+
+.dLeftColumn {
+  flex-grow: 1;
+}
+
+.dRighttColumn {
+}
