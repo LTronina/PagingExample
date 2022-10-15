@@ -4,7 +4,7 @@ export interface ITableWithFiltering<T> {
 }
 
 export interface ITabColumn<T> {
-  name: keyof T;
+  name: keyof T & string;
   filterColumn: boolean;
   filter: { values: string[] };
   style?: { [klass: string]: any };

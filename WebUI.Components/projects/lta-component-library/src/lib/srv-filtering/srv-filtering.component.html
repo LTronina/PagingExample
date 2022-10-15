@@ -1,5 +1,30 @@
 <div class="drow">
-  <div class="dLeftColumn">
+  <div class="filterRow filterContainer">
+    <div class="filterContainer_labels">
+      <ng-container *ngFor="let item of config.columns">
+        <button
+          *ngIf="item.filter.values[0]"
+          class="btn chip"
+          (click)="clearFilterItem(item.name)"
+        >
+          {{ item.name }} zawiera {{ item.filter.values[0] }}
+          <i class="ico-times" role="img" aria-label="Delete"></i>
+        </button>
+      </ng-container>
+    </div>
+    <div class="form-check form-switch filterContainer_button">
+      <label class="form-check-label"
+        >Filter
+        <input
+          class="form-check-input customBack"
+          type="checkbox"
+          [(ngModel)]="config.showFilter"
+          (ngModelChange)="clearFilter()"
+        />
+      </label>
+    </div>
+  </div>
+  <div>
     <table class="table table-sm" style="width: 100%">
       <thead>
         <tr>
@@ -23,19 +48,5 @@
 
       <ng-content></ng-content>
     </table>
-  </div>
-
-  <div class="dRighttColumn">
-    <div class="form-check form-switch">
-      <input
-        class="form-check-input customBack"
-        type="checkbox"
-        [(ngModel)]="config.showFilter"
-        (ngModelChange)="clearFilter()"
-      />
-      <label class="form-check-label" for="flexSwitchCheckChecked"
-        >Filter</label
-      >
-    </div>
   </div>
 </div>

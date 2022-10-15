@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Event } from '@angular/router';
 import { ITableWithFiltering } from './srv-filtering.interfaces';
 
 @Component({
@@ -32,6 +33,14 @@ export class SrvFilteringComponent implements OnInit {
       this.config.columns.forEach((element) => {
         element.filter.values[0] = '';
       });
+      this.filterChanged();
+    }
+  }
+
+  clearFilterItem(item: string) {
+    var record = this.config.columns.find((x) => x.name === item);
+    if (record) {
+      record.filter.values[0] = '';
       this.filterChanged();
     }
   }

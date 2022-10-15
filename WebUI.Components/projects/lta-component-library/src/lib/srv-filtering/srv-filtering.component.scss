@@ -14,14 +14,48 @@ th {
 }
 
 .drow {
-  display: flex;
   width: 100%;
-}
-
-.dLeftColumn {
-  flex-grow: 1;
 }
 
 .customBack {
   background-color: var(--filterButtonBackground);
+}
+
+.filterContainer {
+  display: flex;
+}
+
+.filterContainer_labels {
+  flex: 80%;
+}
+
+.filterContainer_button {
+  text-align: right;
+  flex: 20%;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0 5px;
+  height: 22px;
+  font-size: 12px;
+  line-height: 22px;
+  border-radius: 11px;
+  background-color: #f1f1f1;
+  margin-left: 3px;
+}
+
+.chip:hover {
+  background-color: #d4d1d1;
+}
+
+[class^="ico-"],
+[class*=" ico-"] {
+  font: normal 1em/1 Arial, sans-serif;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.ico-times:before {
+  content: "\2716";
 }
