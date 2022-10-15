@@ -1,24 +1,50 @@
 # LtaComponentLibrary
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.0.
+Small lib for Angular with few components paging, sorting etc
 
-## Code scaffolding
+# Usage
 
-Run `ng generate component component-name --project lta-component-library` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project lta-component-library`.
-> Note: Don't forget to add `--project lta-component-library` or else it will be added to the default project in your `angular.json` file. 
+## Sorting
 
-## Build
+<th lib-srv-sorting [name]="'TemperatureC'" (onSorting)="Sort($event)">
+          TemperatureC
+        </th>
 
-Run `ng build lta-component-library` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Pagination
 
-## Publishing
+<lib-srv-pagination
+[config]="vm.metadata"
+(pageChanged)="pageChanged($event)"
+[pageSizes]="[5, 10, 15, 20]"
+class="srv-pagination"
+[translation]="pagingSTranslation" ></lib-srv-pagination>
 
-After building your library with `ng build lta-component-library`, go to the dist folder `cd dist/lta-component-library` and run `npm publish`.
+## Filtering
 
-## Running unit tests
+<lib-srv-filtering
+[config]="vm.config"
+(filterChange)="filterChangedHandler($event)" >
 
-Run `ng test lta-component-library` to execute the unit tests via [Karma](https://karma-runner.github.io).
+<tbody>
+<tr *ngFor="let item of vm.clients">
+<td *ngFor="let column of vm.config.columns">
+{{ item[column.name] }}
+</td>
+</tr>
+</tbody>
 
-## Further help
+## in case of local development
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+//lib side
+ng build --project=lta-component-library --watch
+
+//in consumer
+npm link lta-component-library
+angular.json "preserveSymlinks": true,
+
+#publish package
+ng build --project=lta-component-library -c=production
+#increment version
+npm login
+cd .\dist\lta-component-library\
+npm publish
