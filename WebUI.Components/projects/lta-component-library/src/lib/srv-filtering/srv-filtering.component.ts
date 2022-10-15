@@ -26,4 +26,13 @@ export class SrvFilteringComponent implements OnInit {
   filterChanged() {
     this.filterChange.emit(this?.config?.columns);
   }
+
+  clearFilter() {
+    if (!this.config.showFilter) {
+      this.config.columns.forEach((element) => {
+        element.filter.values[0] = '';
+      });
+      this.filterChanged();
+    }
+  }
 }
