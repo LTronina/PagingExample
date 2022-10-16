@@ -6,6 +6,7 @@ export interface ITableWithFiltering<T> {
 export interface ITabColumn<T> {
   name: keyof T & string;
   filterColumn: boolean;
+  enableSort: boolean;
   filter: { values: string[] };
   style?: { [klass: string]: any };
 }

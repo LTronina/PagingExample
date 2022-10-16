@@ -7,7 +7,7 @@
           class="btn chip"
           (click)="clearFilterItem(item.name)"
         >
-          {{ item.name }} zawiera {{ item.filter.values[0] }}
+          {{ item.name }} ({{ item.filter.values[0] }})
           <i class="ico-times" role="img" aria-label="Delete"></i>
         </button>
       </ng-container>
@@ -33,14 +33,20 @@
             *ngFor="let column of config?.columns"
             [ngStyle]="column?.style"
             [ngClass]="column?.filterColumn ? 'columnWidth' : ''"
+            lib-srv-sorting
+            [name]="column.name"
+            (onSorting)="Sort($event)"
+            class="noselect"
           >
-            {{ column?.name }}
+            <span column>{{ column?.name }}</span>
+
             <input
+              filter
               *ngIf="column?.filterColumn && config?.showFilter"
               type="search"
-              class="form-control"
               [(ngModel)]="column.filter.values[0]"
               (ngModelChange)="filterChanged()"
+              class="filter__inputbox"
             />
           </th>
         </tr>

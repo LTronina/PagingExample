@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Event } from '@angular/router';
 import { ITableWithFiltering } from './srv-filtering.interfaces';
 
 @Component({
@@ -19,6 +18,7 @@ export class SrvFilteringComponent implements OnInit {
   }
 
   @Output() filterChange = new EventEmitter<any>();
+  @Output() onSorting = new EventEmitter<{ [name: string]: string }>();
 
   ngOnInit(): void {}
 
@@ -43,5 +43,9 @@ export class SrvFilteringComponent implements OnInit {
       record.filter.values[0] = '';
       this.filterChanged();
     }
+  }
+
+  Sort(sortingState: { [name: string]: string }) {
+    this.onSorting.emit(sortingState);
   }
 }
